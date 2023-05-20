@@ -55,9 +55,13 @@ var DefaultConfig = Config{
 
 var AppConfig = DefaultConfig
 
+const (
+	configPath = "/.config/dockercolorize/config.json"
+)
+
 func LoadConfig() {
 	home, _ := os.UserHomeDir()
-	file, err := ioutil.ReadFile(home + "/.config/dockercolorize/config.json")
+	file, err := ioutil.ReadFile(home + configPath)
 
 	if err != nil {
 		log.Printf("failed to load color config: %s. Using default.", err)
