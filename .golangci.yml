@@ -3,8 +3,8 @@ linters:
 
 linters-settings:
   gofumpt:
-    module-path: docker-color-output
+    module-path: dockercolorize
   varnamelen:
-    ignore-names: [ i, in, j, m, sb, tt, v ]
+    ignore-names: [i, in, j, m, sb, tt, v]
   wrapcheck:
-    ignorePackageGlobs: [ docker-color-output/internal/* ]
+    ignorePackageGlobs: [dockercolorize/internal/*]

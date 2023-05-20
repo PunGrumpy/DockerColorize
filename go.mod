@@ -1,3 +1,3 @@
-module docker-color-output
+module github.com/PunGrumpy/dokcercolorize
 
 go 1.20

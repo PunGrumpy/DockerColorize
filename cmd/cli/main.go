@@ -5,9 +5,9 @@ package main
 import (
 	"os"
 
-	"docker-color-output/internal/app"
-	"docker-color-output/internal/stdin"
-	"docker-color-output/internal/stdout"
+	"github.com/PunGrumpy/dokcercolorize/internal/app"
+	"github.com/PunGrumpy/dokcercolorize/internal/stdin"
+	"github.com/PunGrumpy/dokcercolorize/internal/stdout"
 )
 
 func main() {

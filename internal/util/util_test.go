@@ -3,9 +3,9 @@ package util_test
 import (
 	"testing"
 
-	"docker-color-output/internal/util"
-	"docker-color-output/pkg/color"
-	"docker-color-output/pkg/util/assert"
+	"github.com/PunGrumpy/dokcercolorize/internal/util"
+	"github.com/PunGrumpy/dokcercolorize/pkg/color"
+	"github.com/PunGrumpy/dokcercolorize/pkg/util/assert"
 )
 
 func TestSplit(t *testing.T) {

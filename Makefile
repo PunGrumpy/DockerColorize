@@ -3,7 +3,7 @@
 
 BIN=$(CURDIR)/bin
 GO=$(shell which go)
-APP=docker-color-output
+APP=dockercolorize
 
 build:
 	$(GO) build -o $(BIN)/$(APP) ./cmd/cli

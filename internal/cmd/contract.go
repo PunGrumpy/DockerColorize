@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"docker-color-output/internal/layout"
+	"github.com/PunGrumpy/dokcercolorize/internal/layout"
 )
 
 const ValidTotalParts = 2

@@ -4,9 +4,9 @@
 #  alias docker='bash execute.sh docker'
 if [[ "$1" == "docker" ]]; then
   if [[ "$2" == "ps" || "$2" == "images" ]]; then
-    "$@" | docker-color-output
+    "$@" | dockercolorize
   elif [[ "$2" == "compose" && "$3" == "ps" ]]; then
-    "$@" | docker-color-output
+    "$@" | dockercolorize
   else
     "$@"
   fi

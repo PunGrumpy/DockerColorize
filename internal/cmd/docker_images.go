@@ -3,9 +3,9 @@ package cmd
 import (
 	"strings"
 
-	"docker-color-output/internal/layout"
-	"docker-color-output/pkg/color"
-	"docker-color-output/pkg/util/number"
+	"github.com/PunGrumpy/dokcercolorize/internal/layout"
+	"github.com/PunGrumpy/dokcercolorize/pkg/color"
+	"github.com/PunGrumpy/dokcercolorize/pkg/util/number"
 )
 
 const (
