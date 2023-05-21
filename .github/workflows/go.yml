@@ -55,13 +55,17 @@ jobs:
         with:
           name: build
 
+      - name: Get latest tag
+        id: gettag
+        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: git describe --tags --abbrev=0 != ${{ github.event.workflow_run.head_commit.id }}
+        if: steps.gettag.outputs.tag != ${{ github.event.workflow_run.head_commit.id }}
         with:
           files: |
             bin/*
-          tag_name: git describe --tags --abbrev=0
+          tag_name: ${{ steps.gettag.outputs.tag }}
           body: |
             ## 🔔 Update DockerColorize
           draft: false
