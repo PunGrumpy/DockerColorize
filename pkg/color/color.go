@@ -31,12 +31,9 @@ var (
 	once             sync.Once //nolint:gochecknoglobals
 )
 
-func init() {
-	config.SetConfigProvider(config.NewAppConfigProvider())
-}
-
 func getColorProvider() Provider {
 	once.Do(func() {
+		config.SetConfigProvider(config.NewAppConfigProvider())
 		providerInstance = &Provider{
 			reset:       config.AppConfig.Color.Reset,
 			black:       config.AppConfig.Color.Black,
