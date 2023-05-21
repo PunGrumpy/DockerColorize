@@ -5,23 +5,23 @@ import (
 )
 
 var (
-	reset       = config.AppConfig.Color.Reset
-	black       = config.AppConfig.Color.Black
-	darkGray    = config.AppConfig.Color.DarkGray
-	red         = config.AppConfig.Color.Red
-	lightRed    = config.AppConfig.Color.LightRed
-	green       = config.AppConfig.Color.Green
-	lightGreen  = config.AppConfig.Color.LightGreen
-	brown       = config.AppConfig.Color.Brown
-	yellow      = config.AppConfig.Color.Yellow
-	blue        = config.AppConfig.Color.Blue
-	lightBlue   = config.AppConfig.Color.LightBlue
-	purple      = config.AppConfig.Color.Purple
-	lightPurple = config.AppConfig.Color.LightPurple
-	cyan        = config.AppConfig.Color.Cyan
-	lightCyan   = config.AppConfig.Color.LightCyan
-	lightGray   = config.AppConfig.Color.LightGray
-	white       = config.AppConfig.Color.White
+	reset       = config.AppConfig.Color.ResetColor
+	black       = config.AppConfig.Color.BlackColor
+	darkGray    = config.AppConfig.Color.DarkGrayColor
+	red         = config.AppConfig.Color.RedColor
+	lightRed    = config.AppConfig.Color.LightRedColor
+	green       = config.AppConfig.Color.GreenColor
+	lightGreen  = config.AppConfig.Color.LightGreenColor
+	brown       = config.AppConfig.Color.BrownColor
+	yellow      = config.AppConfig.Color.YellowColor
+	blue        = config.AppConfig.Color.BlueColor
+	lightBlue   = config.AppConfig.Color.LightBlueColor
+	purple      = config.AppConfig.Color.PurpleColor
+	lightPurple = config.AppConfig.Color.LightPurpleColor
+	cyan        = config.AppConfig.Color.CyanColor
+	lightCyan   = config.AppConfig.Color.LightCyanColor
+	lightGray   = config.AppConfig.Color.LightGrayColor
+	white       = config.AppConfig.Color.WhiteColor
 )
 
 func Black(value string) string {
