@@ -55,14 +55,10 @@ jobs:
         with:
           name: build
 
-      - name: Get latest tag
-        id: gettag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
-
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.gettag.outputs.tag }}
+          tag_name: v2.4.0
           files: bin/*
           body: '## 🔔 Update DockerColorize'
           draft: false
