@@ -31,6 +31,10 @@ var (
 	once             sync.Once //nolint:gochecknoglobals
 )
 
+func init() {
+	config.SetConfigProvider(config.NewAppConfigProvider())
+}
+
 func getColorProvider() Provider {
 	once.Do(func() {
 		providerInstance = &Provider{
