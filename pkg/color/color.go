@@ -1,85 +1,122 @@
 package color
 
-const (
-	reset       = "\033[0m"
-	black       = "\033[0;30m"
-	darkGray    = "\033[1;30m"
-	red         = "\033[0;31m"
-	lightRed    = "\033[1;31m"
-	green       = "\033[0;32m"
-	lightGreen  = "\033[1;32m"
-	brown       = "\033[0;33m"
-	yellow      = "\033[1;33m"
-	blue        = "\033[0;34m"
-	lightBlue   = "\033[1;34m"
-	purple      = "\033[0;35m"
-	lightPurple = "\033[1;35m"
-	cyan        = "\033[0;36m"
-	lightCyan   = "\033[1;36m"
-	lightGray   = "\033[0;37m"
-	white       = "\033[1;37m"
+import (
+	"sync"
+
+	"dockercolorize/pkg/config"
 )
 
+type Provider struct {
+	reset       string
+	black       string
+	darkGray    string
+	red         string
+	lightRed    string
+	green       string
+	lightGreen  string
+	brown       string
+	yellow      string
+	blue        string
+	lightBlue   string
+	purple      string
+	lightPurple string
+	cyan        string
+	lightCyan   string
+	lightGray   string
+	white       string
+}
+
+var (
+	providerInstance *Provider //nolint:gochecknoglobals
+	once             sync.Once //nolint:gochecknoglobals
+)
+
+func getColorProvider() Provider {
+	once.Do(func() {
+		providerInstance = &Provider{
+			reset:       config.AppConfig.Color.Reset,
+			black:       config.AppConfig.Color.Black,
+			darkGray:    config.AppConfig.Color.DarkGray,
+			red:         config.AppConfig.Color.Red,
+			lightRed:    config.AppConfig.Color.LightRed,
+			green:       config.AppConfig.Color.Green,
+			lightGreen:  config.AppConfig.Color.LightGreen,
+			brown:       config.AppConfig.Color.Brown,
+			yellow:      config.AppConfig.Color.Yellow,
+			blue:        config.AppConfig.Color.Blue,
+			lightBlue:   config.AppConfig.Color.LightBlue,
+			purple:      config.AppConfig.Color.Purple,
+			lightPurple: config.AppConfig.Color.LightPurple,
+			cyan:        config.AppConfig.Color.Cyan,
+			lightCyan:   config.AppConfig.Color.LightCyan,
+			lightGray:   config.AppConfig.Color.LightGray,
+			white:       config.AppConfig.Color.White,
+		}
+	})
+
+	return *providerInstance
+}
+
 func Black(value string) string {
-	return black + value + reset
+	return getColorProvider().black + value + getColorProvider().reset
 }
 
 func DarkGray(value string) string {
-	return darkGray + value + reset
+	return getColorProvider().darkGray + value + getColorProvider().reset
 }
 
 func Red(value string) string {
-	return red + value + reset
+	return getColorProvider().red + value + getColorProvider().reset
 }
 
 func LightRed(value string) string {
-	return lightRed + value + reset
+	return getColorProvider().lightRed + value + getColorProvider().reset
 }
 
 func Green(value string) string {
-	return green + value + reset
+	return getColorProvider().green + value + getColorProvider().reset
 }
 
 func LightGreen(value string) string {
-	return lightGreen + value + reset
+	return getColorProvider().lightGreen + value + getColorProvider().reset
 }
 
 func Brown(value string) string {
-	return brown + value + reset
+	return getColorProvider().brown + value + getColorProvider().reset
 }
 
 func Yellow(value string) string {
-	return yellow + value + reset
+	return getColorProvider().yellow + value + getColorProvider().reset
 }
 
 func Blue(value string) string {
-	return blue + value + reset
+	return getColorProvider().blue + value + getColorProvider().reset
 }
 
 func LightBlue(value string) string {
-	return lightBlue + value + reset
+	return getColorProvider().lightBlue + value + getColorProvider().reset
 }
 
 func Purple(value string) string {
-	return purple + value + reset
+	return getColorProvider().purple + value + getColorProvider().reset
 }
 
 func LightPurple(value string) string {
-	return lightPurple + value + reset
+	return getColorProvider().lightPurple + value + getColorProvider().reset
 }
 
 func Cyan(value string) string {
-	return cyan + value + reset
+	return getColorProvider().cyan + value + getColorProvider().reset
 }
 
 func LightCyan(value string) string {
-	return lightCyan + value + reset
+	return getColorProvider().lightCyan + value + getColorProvider().reset
 }
 
 func LightGray(value string) string {
-	return lightGray + value + reset
+	return getColorProvider().lightGray + value + getColorProvider().reset
 }
 
 func White(value string) string {
-	return white + value + reset
+	return getColorProvider().white + value + getColorProvider().reset
 }
