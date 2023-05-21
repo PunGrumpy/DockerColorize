@@ -3,7 +3,7 @@ before:
     - go mod tidy
 builds:
   - id: doclercolorize
-    main: ./cmd/cli/main.go
+    main: ./cmd/cli/
   - env:
       - CGO_ENABLED=0
     goos:
