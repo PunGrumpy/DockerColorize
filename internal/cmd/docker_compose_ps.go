@@ -3,8 +3,8 @@ package cmd
 import (
 	"strings"
 
-	"github.com/PunGrumpy/dockercolorize/internal/layout"
-	"github.com/PunGrumpy/dockercolorize/pkg/color"
+	"dockercolorize/internal/layout"
+	"dockercolorize/pkg/color"
 )
 
 const (

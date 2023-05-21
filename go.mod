@@ -1,3 +1,3 @@
-module github.com/PunGrumpy/dockercolorize
+module dockercolorize
 
 go 1.20

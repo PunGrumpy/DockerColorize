@@ -3,8 +3,8 @@ package number_test
 import (
 	"testing"
 
-	"github.com/PunGrumpy/dockercolorize/pkg/util/assert"
-	"github.com/PunGrumpy/dockercolorize/pkg/util/number"
+	"dockercolorize/pkg/util/assert"
+	"dockercolorize/pkg/util/number"
 )
 
 func TestParseFloat(t *testing.T) {

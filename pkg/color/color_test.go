@@ -3,8 +3,8 @@ package color_test
 import (
 	"testing"
 
-	"github.com/PunGrumpy/dockercolorize/pkg/color"
-	"github.com/PunGrumpy/dockercolorize/pkg/util/assert"
+	"dockercolorize/pkg/color"
+	"dockercolorize/pkg/util/assert"
 )
 
 //nolint:funlen

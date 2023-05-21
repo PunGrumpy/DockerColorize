@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/PunGrumpy/dockercolorize/internal/layout"
+	"dockercolorize/internal/layout"
 )
 
 const ValidTotalParts = 2
