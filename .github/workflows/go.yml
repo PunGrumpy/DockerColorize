@@ -58,8 +58,8 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v2.4.0
-          files: bin/*
+          tag_name: ${{ github.ref }}
+          files: build/*
           body: '## 🔔 Update DockerColorize'
           draft: false
           prerelease: false
