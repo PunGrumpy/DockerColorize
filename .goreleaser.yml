@@ -1,0 +1,21 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+brews:
+  - tap:
+      owner: PunGrumpy
+      name: homebrew-formulas
+    folder: formula
+    homepage: https://github.com/PunGrumpy/dockercolorize
+    description: A simple tool to colorize docker output
+    commit_author:
+      name: PunGrumpy
+      email: 108584943+PunGrumpy@users.noreply.github.com
