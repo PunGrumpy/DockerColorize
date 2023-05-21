@@ -47,9 +47,7 @@ jobs:
 
       - name: Get Version
         id: get_version
-        run: |
-          file_path="internal/app/const.go"
-          echo VERSION=$(grep -oP '(?<=Ver\s=\s")[^"]+' "$file_path") >> $GITHUB_ENV
+        run: echo VERSION=$(git describe --tags --abbrev=0) >> $GITHUB_ENV
 
       - name: Download Artifact
         uses: actions/download-artifact@v3
