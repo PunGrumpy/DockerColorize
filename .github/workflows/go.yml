@@ -63,7 +63,7 @@ jobs:
             bin/*
           tag_name: git describe --tags --abbrev=0
           body: |
-            ## 🔔 Update
+            ## 🔔 Update DockerColorize
           draft: false
           prerelease: false
         env:
