@@ -5,9 +5,9 @@ package main
 import (
 	"os"
 
-	"github.com/PunGrumpy/dokcercolorize/internal/app"
-	"github.com/PunGrumpy/dokcercolorize/internal/stdin"
-	"github.com/PunGrumpy/dokcercolorize/internal/stdout"
+	"github.com/PunGrumpy/dockercolorize/internal/app"
+	"github.com/PunGrumpy/dockercolorize/internal/stdin"
+	"github.com/PunGrumpy/dockercolorize/internal/stdout"
 )
 
 func main() {

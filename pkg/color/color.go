@@ -1,7 +1,7 @@
 package color
 
 import (
-	"github.com/PunGrumpy/dokcercolorize/pkg/config"
+	"github.com/PunGrumpy/dockercolorize/pkg/config"
 )
 
 var (

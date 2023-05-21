@@ -3,7 +3,7 @@ package layout
 import (
 	"strings"
 
-	"github.com/PunGrumpy/dokcercolorize/internal/util"
+	"github.com/PunGrumpy/dockercolorize/internal/util"
 )
 
 func ParseHeader(rows []string) Header {

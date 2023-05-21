@@ -4,10 +4,10 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/PunGrumpy/dokcercolorize/internal/cmd"
-	"github.com/PunGrumpy/dokcercolorize/internal/layout"
-	"github.com/PunGrumpy/dokcercolorize/internal/util"
-	"github.com/PunGrumpy/dokcercolorize/pkg/color"
+	"github.com/PunGrumpy/dockercolorize/internal/cmd"
+	"github.com/PunGrumpy/dockercolorize/internal/layout"
+	"github.com/PunGrumpy/dockercolorize/internal/util"
+	"github.com/PunGrumpy/dockercolorize/pkg/color"
 )
 
 var (

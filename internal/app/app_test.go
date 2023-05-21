@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/PunGrumpy/dokcercolorize/internal/app"
-	"github.com/PunGrumpy/dokcercolorize/pkg/util/assert"
+	"github.com/PunGrumpy/dockercolorize/internal/app"
+	"github.com/PunGrumpy/dockercolorize/pkg/util/assert"
 )
 
 func TestRun(t *testing.T) {
