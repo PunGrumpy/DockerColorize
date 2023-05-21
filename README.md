@@ -1,37 +1,27 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/5787193/161379988-21c856ef-839a-433e-b014-e81042adac6d.png">
-</p>
+<div align="center">
 
-<p align="center">
-  <a href="https://github.com/devemio/docker-color-output/actions/workflows/go.yml"><img src="https://img.shields.io/github/actions/workflow/status/devemio/docker-color-output/go.yml?branch=main"></a>
-  <a href="https://codecov.io/gh/devemio/docker-color-output"><img src="https://img.shields.io/codecov/c/gh/devemio/docker-color-output" alt="Coverage"></a>
-  <a href="https://github.com/devemio/docker-color-output/releases"><img src="https://img.shields.io/github/downloads/devemio/docker-color-output/total?color=brightgreen" alt="Downloads"></a>
-  <a href="https://github.com/devemio/docker-color-output/releases"><img src="https://img.shields.io/github/v/release/devemio/docker-color-output" alt="Release"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
-</p>
+# Dockercolorize 🐳🌈
 
+Enhancing Docker output with vibrant colors. Dockercolorize is a command line tool designed to add colors to Docker outputs, making them more visually organized and readable.
+
+</div>
+
+<div align="center">
+
+![GitHub Actions](https://github.com/PunGrumpy/dockercolorize/actions/workflows/go.yml/badge.svg?branch=main)
+![Release](https://img.shields.io/github/v/release/PunGrumpy/dockercolorize)
+![License](https://img.shields.io/github/license/PunGrumpy/dockercolorize)
+![Downloads](https://img.shields.io/github/downloads/PunGrumpy/dockercolorize/total)
+
+</div>
 
 ## 👨‍💻 Installation
 
-This package uses pipeline and allows you to color the Docker output.
-
-#### 🍏 Mac
-
-```bash
-brew install dldash/core/docker-color-output
-```
-
-#### 🏝 Linux
-
-```bash
-sudo add-apt-repository ppa:dldash/core
-sudo apt update
-sudo apt install docker-color-output
-```
+⚠️ Currently, Dockercolorize is not available on `homebrew` or `apt-get`. Please proceed with manual installation.
 
 #### 🪄 Aliases
 
-Use these [aliases](bash/aliases.sh) for better interaction.
+For a smoother user experience, use these [aliases](bash/aliases.sh).
 
 ## 📚 Usage
 
