@@ -5,3 +5,6 @@ dpkg
 *~
 .gnupg
 *.sw[pno]
+
+# Test file
+coverage.out
