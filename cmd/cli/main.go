@@ -8,9 +8,13 @@ import (
 	"dockercolorize/internal/app"
 	"dockercolorize/internal/stdin"
 	"dockercolorize/internal/stdout"
+	"dockercolorize/pkg/config"
 )
 
 func main() {
+	provider := config.NewAppConfigProvider()
+	config.SetConfigProvider(provider)
+
 	if err := run(); err != nil {
 		app.Usage(err)
 		os.Exit(1)

@@ -1,27 +1,23 @@
 package color
 
-import (
-	"dockercolorize/pkg/config"
-)
-
-var (
-	reset       = config.AppConfig.Color.Reset
-	black       = config.AppConfig.Color.Black
-	darkGray    = config.AppConfig.Color.DarkGray
-	red         = config.AppConfig.Color.Red
-	lightRed    = config.AppConfig.Color.LightRed
-	green       = config.AppConfig.Color.Green
-	lightGreen  = config.AppConfig.Color.LightGreen
-	brown       = config.AppConfig.Color.Brown
-	yellow      = config.AppConfig.Color.Yellow
-	blue        = config.AppConfig.Color.Blue
-	lightBlue   = config.AppConfig.Color.LightBlue
-	purple      = config.AppConfig.Color.Purple
-	lightPurple = config.AppConfig.Color.LightPurple
-	cyan        = config.AppConfig.Color.Cyan
-	lightCyan   = config.AppConfig.Color.LightCyan
-	lightGray   = config.AppConfig.Color.LightGray
-	white       = config.AppConfig.Color.White
+const (
+	reset       = "\033[0m"
+	black       = "\033[0;30m"
+	darkGray    = "\033[1;30m"
+	red         = "\033[0;31m"
+	lightRed    = "\033[1;31m"
+	green       = "\033[0;32m"
+	lightGreen  = "\033[1;32m"
+	brown       = "\033[0;33m"
+	yellow      = "\033[1;33m"
+	blue        = "\033[0;34m"
+	lightBlue   = "\033[1;34m"
+	purple      = "\033[0;35m"
+	lightPurple = "\033[1;35m"
+	cyan        = "\033[0;36m"
+	lightCyan   = "\033[1;36m"
+	lightGray   = "\033[0;37m"
+	white       = "\033[1;37m"
 )
 
 func Black(value string) string {
