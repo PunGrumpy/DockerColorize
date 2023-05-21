@@ -112,6 +112,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v4
         with:
           version: latest
-          args: release --rm-dist --skip-validate --skip-publish --snapshot --release-notes=.github/CHANGELOG.md
+          args: release --rm-dist --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
