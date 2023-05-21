@@ -61,13 +61,10 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: steps.gettag.outputs.tag != ${{ github.event.workflow_run.head_commit.id }}
         with:
-          files: |
-            bin/*
           tag_name: ${{ steps.gettag.outputs.tag }}
-          body: |
-            ## 🔔 Update DockerColorize
+          files: bin/*
+          body: '## 🔔 Update DockerColorize'
           draft: false
           prerelease: false
         env:
