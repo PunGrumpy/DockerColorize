@@ -1,6 +1,6 @@
 package app
 
 const (
-	Ver  = "2.3.1"
+	Ver  = "2.4.0"
 	Name = "dockercolorize"
 )

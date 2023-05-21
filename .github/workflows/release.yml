@@ -13,7 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Get Version
+        id: get_version
+        run: |
+          file_path="internal/app/const.go"
+          echo VERSION=$(grep -oP '(?<=Ver\s=\s")[^"]+' "$file_path") >> $GITHUB_ENV
 
       - name: Download artifacts
         uses: actions/download-artifact@v2
@@ -26,6 +32,7 @@ jobs:
         with:
           files: |
             build/*
+          tag_name: ${{ env.VERSION }}
           body: |
             ## 🔔 ${{ github.event.workflow_run.head_commit.message }}
           draft: false
