@@ -2,6 +2,7 @@ before:
   hooks:
     - go mod tidy
 builds:
+  - skip: true
   - id: doclercolorize
     main: ./cmd/cli/
   - env:
