@@ -3,7 +3,7 @@ package color
 import (
 	"sync"
 
-	"dockercolorize/pkg/config"
+	"github.com/PunGrumpy/dockercolorize/pkg/config"
 )
 
 type Provider struct {

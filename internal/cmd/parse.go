@@ -3,8 +3,8 @@ package cmd
 import (
 	"errors"
 
-	"dockercolorize/internal/layout"
-	"dockercolorize/internal/util"
+	"github.com/PunGrumpy/dockercolorize/internal/layout"
+	"github.com/PunGrumpy/dockercolorize/internal/util"
 )
 
 var ErrInvalidFirstLine = errors.New("invalid first line")

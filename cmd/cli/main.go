@@ -5,10 +5,10 @@ package main
 import (
 	"os"
 
-	"dockercolorize/internal/app"
-	"dockercolorize/internal/stdin"
-	"dockercolorize/internal/stdout"
-	"dockercolorize/pkg/config"
+	"github.com/PunGrumpy/dockercolorize/internal/app"
+	"github.com/PunGrumpy/dockercolorize/internal/stdin"
+	"github.com/PunGrumpy/dockercolorize/internal/stdout"
+	"github.com/PunGrumpy/dockercolorize/pkg/config"
 )
 
 func main() {

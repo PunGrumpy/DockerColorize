@@ -5,7 +5,7 @@ package app
 import (
 	"fmt"
 
-	"dockercolorize/pkg/color"
+	"github.com/PunGrumpy/dockercolorize/pkg/color"
 )
 
 //nolint:forbidigo
