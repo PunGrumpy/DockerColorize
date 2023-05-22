@@ -91,9 +91,17 @@ jobs:
           git tag $VER
           git push origin $VER
 
+      - name: Get New Version
+        id: check-version
+        if: steps.changes.outputs.constgo == 'true'
+        run: |
+          VER_FILE=.version
+          VER=$(cat $VER_FILE)
+          echo "VERSION=$VER" >> $GITHUB_ENV
+
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
-        if: steps.check-version.outputs.new-version != ''
+        if: ${{ env.VERSION }} != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
