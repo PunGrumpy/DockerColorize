@@ -81,6 +81,16 @@ jobs:
             exit 1
           fi
 
+      - name: Create Tag
+        if: steps.changes.outputs.constgo == 'true'
+        run: |
+          VER_FILE=.version
+          VER=$(cat $VER_FILE)
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git tag $VER
+          git push origin $VER
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         if: steps.check-version.outputs.new-version != ''
@@ -114,7 +124,7 @@ jobs:
           echo "VERSION=$VER" >> $GITHUB_ENV
 
       - name: Go Releaser
-        if: steps.get-version.outputs.version != ''
+        if: ${{ env.VERSION }} != ''
         uses: goreleaser/goreleaser-action@v4
         with:
           version: ${{ steps.get-version.outputs.version }}
