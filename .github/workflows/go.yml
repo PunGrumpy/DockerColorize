@@ -110,7 +110,7 @@ jobs:
         id: get-version
         run: |
           VER_FILE=.version
-          VER=$(awk -F\" '/Ver/ {print $2}' internal/app/const.go)
+          VER=$(cat $VER_FILE)
           echo "VERSION=$VER" >> $GITHUB_ENV
 
       - name: Go Releaser
