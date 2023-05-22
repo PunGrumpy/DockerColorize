@@ -1,3 +1,4 @@
+project_name: dockercolorize
 builds:
   - id: doclercolorize
     main: ./cmd/cli/
