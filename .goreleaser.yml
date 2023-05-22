@@ -1,14 +1,12 @@
 project_name: dockercolorize
+
 builds:
   - id: doclercolorize
     main: ./cmd/cli/
-  - env:
-      - CGO_ENABLED=0
     goos:
       - darwin
       - linux
-    goarch:
-      - amd64
+
 brews:
   - tap:
       owner: PunGrumpy
