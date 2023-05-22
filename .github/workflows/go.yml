@@ -92,14 +92,13 @@ jobs:
           git push origin $VER
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: svenstaro/upload-release-action@v2
         if: steps.check-version.outputs.new-version != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.check-version.outputs.new-version }}
-          name: ${{ steps.check-version.outputs.new-version }}
-          draft: false
-          prerelease: false
-          files: |
-            bin/*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: bin/*
+          tag: ${{ steps.check-version.outputs.new-version }}
+          overwrite: true
+          file_glob: true
