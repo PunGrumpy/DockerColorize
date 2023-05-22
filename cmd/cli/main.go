@@ -24,12 +24,12 @@ func main() {
 func run() error {
 	in, err := stdin.Get()
 	if err != nil {
-		return err
+		return err //nolint:wrapcheck
 	}
 
 	rows, err := app.Run(in)
 	if err != nil {
-		return err
+		return err //nolint:wrapcheck
 	}
 
 	for _, row := range rows {

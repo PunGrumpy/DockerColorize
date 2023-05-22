@@ -29,7 +29,7 @@ func Run(in []string) ([]string, error) {
 
 	command, err := cmd.Parse(header)
 	if err != nil {
-		return nil, err
+		return nil, err //nolint:wrapcheck
 	}
 
 	res := make([]string, len(in))
