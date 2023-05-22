@@ -127,7 +127,7 @@ jobs:
         if: ${{ env.VERSION }} != ''
         uses: goreleaser/goreleaser-action@v4
         with:
-          version: ${{ steps.get-version.outputs.version }}
+          version: latest
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
