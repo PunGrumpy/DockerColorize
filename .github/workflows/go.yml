@@ -93,7 +93,6 @@ jobs:
 
       - name: Get New Version
         id: check-version
-        if: steps.changes.outputs.constgo == 'true'
         run: |
           VER_FILE=.version
           VER=$(cat $VER_FILE)
