@@ -17,11 +17,52 @@ Enhancing Docker output with vibrant colors. Dockercolorize is a command line to
 
 ## 👨‍💻 Installation
 
-⚠️ Currently, Dockercolorize is not available on `homebrew` or `apt-get`. Please proceed with manual installation.
+### 🍺 Homebrew
+
+```bash
+# Tap the formula repository
+brew tap PunGrumpy/formulas
+
+# Check tap it's working
+brew tap-info PunGrumpy/formulas
+brew search PunGrumpy/formulas
+
+# Install the formula
+brew install dockercolorize
+```
 
 #### 🪄 Aliases
 
-For a smoother user experience, use these [aliases](bash/aliases.sh).
+For a smoother user experience, use these [aliases](.github/bash/aliases.sh) to replace the original Docker commands.
+
+## ⚙️ Configuration
+
+Locate the configuration file in `~/.config/dockercolorize/config.json` and edit the color scheme.
+
+```json
+// Default color scheme
+{
+  "color": {
+    "reset": "\u001b[0m",
+    "black": "\u001b[0;30m",
+    "darkGray": "\u001b[1;30m",
+    "red": "\u001b[0;31m",
+    "lightRed": "\u001b[1;31m",
+    "green": "\u001b[0;32m",
+    "lightGreen": "\u001b[1;32m",
+    "brown": "\u001b[0;33m",
+    "yellow": "\u001b[1;33m",
+    "blue": "\u001b[0;34m",
+    "lightBlue": "\u001b[1;34m",
+    "purple": "\u001b[0;35m",
+    "lightPurple": "\u001b[1;35m",
+    "cyan": "\u001b[0;36m",
+    "lightCyan": "\u001b[1;36m",
+    "lightGray": "\u001b[0;37m",
+    "white": "\u001b[1;37m"
+  }
+}
+```
 
 ## 📚 Usage
 
