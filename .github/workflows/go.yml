@@ -98,6 +98,14 @@ jobs:
           VER=$(cat $VER_FILE)
           echo "VERSION=$VER" >> $GITHUB_ENV
 
+      - name: Get SHA256
+        id: sha256-mac
+        run: |
+          SHA256=$(shasum -a 256 bin/constgo_darwin_amd64 | awk '{print $1}')
+          echo "SHA256_MAC=$SHA256" >> $GITHUB_ENV
+          SHA256=$(shasum -a 256 bin/constgo_linux_amd64 | awk '{print $1}')
+          echo "SHA256_LINUX=$SHA256" >> $GITHUB_ENV
+
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
         if: ${{ env.VERSION }} != ''
@@ -105,6 +113,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            ## Changelog
+            $(git log --pretty=format:"* %s" ${{ env.VERSION }}...HEAD)
+
+            ## SHA256
+            - macOS: `${{ env.SHA256_MAC }}`
+            - Linux: `${{ env.SHA256_LINUX }}`
           file: bin/*
           tag: ${{ env.VERSION }}
           overwrite: true
