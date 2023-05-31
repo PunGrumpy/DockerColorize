@@ -99,7 +99,7 @@ jobs:
           echo "VERSION=$VER" >> $GITHUB_ENV
 
       - name: Get SHA256
-        id: sha256-mac
+        id: sha256
         run: |
           SHA256=$(shasum -a 256 bin/dockercolorize-darwin-amd64 | awk '{print $1}')
           echo "SHA256_MAC=$SHA256" >> $GITHUB_ENV
