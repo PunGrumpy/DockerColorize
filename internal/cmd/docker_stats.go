@@ -97,17 +97,16 @@ func (c *DockerStats) CPUPerc(v string) string {
 
 func (c *DockerStats) MemUsage(v string) string {
 	memUsage := strings.Split(v, "/")[0]
-	limit := color.DarkGray("/" + strings.Split(v, "/")[1])
 
 	switch {
 	case number.ParseBytes(memUsage) >= memThresholdHigh:
-		return color.Red(v) + limit
+		return color.Red(v)
 	case number.ParseBytes(memUsage) >= memThresholdMedium:
-		return color.Yellow(v) + limit
+		return color.Yellow(v)
 	case number.ParseBytes(memUsage) >= memThresholdLow:
-		return color.Brown(memUsage) + limit
+		return color.Brown(memUsage)
 	default:
-		return color.Green(memUsage) + limit
+		return color.Green(memUsage)
 	}
 }
 
