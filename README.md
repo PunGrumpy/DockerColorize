@@ -103,3 +103,15 @@ docker compose ps | docker-color-output
 ```
 
 ![docker compose ps](https://user-images.githubusercontent.com/5787193/93630916-7267dd00-f9f3-11ea-9521-e69152fa86f1.png)
+
+#### 💡 docker stats
+
+⚠️ For the best experience, use the `--no-stream` flag. The `--no-stream` flag is not supported in Docker Compose.
+
+```bash
+dstats # alias
+```
+
+```bash
+docker stats --no-stream | docker-color-output
+```

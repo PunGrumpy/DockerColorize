@@ -7,6 +7,8 @@ if [[ "$1" == "docker" ]]; then
     "$@" | dockercolorize
   elif [[ "$2" == "compose" && "$3" == "ps" ]]; then
     "$@" | dockercolorize
+  elif [[ "$2" == "stats" && "$3" == "--no-stream" ]]; then
+    "$@" | dockercolorize
   else
     "$@"
   fi
