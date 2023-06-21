@@ -136,7 +136,7 @@ func (*DockerStats) NetIO(v string) string {
 		return color.Brown(v)
 	}
 
-	return v
+	return color.LightGreen(v)
 }
 
 func (*DockerStats) BlockIO(v string) string {
@@ -150,9 +150,9 @@ func (*DockerStats) BlockIO(v string) string {
 		return color.Brown(v)
 	}
 
-	return v
+	return color.LightGreen(v)
 }
 
 func (*DockerStats) PIDs(v string) string {
-	return v
+	return color.LightGreen(v)
 }
