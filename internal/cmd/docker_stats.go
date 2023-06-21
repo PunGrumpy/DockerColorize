@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/PunGrumpy/dockercolorize/internal/layout"
@@ -20,18 +21,14 @@ const (
 )
 
 const (
-	cpuThresholdLow        = 25
-	cpuThresholdMedium     = 50
-	cpuThresholdHigh       = 75
-	memThresholdLow        = 25 * 1024 * 1024
-	memThresholdMedium     = 50 * 1024 * 1024
-	memThresholdHigh       = 75 * 1024 * 1024
-	netIOThresholdLow      = 25 * 1024 * 1024
-	netIOThresholdMedium   = 50 * 1024 * 1024
-	netIOThresholdHigh     = 75 * 1024 * 1024
-	blockIOThresholdLow    = 1 * 1024 * 1024
-	blockIOThresholdMedium = 250 * 1024 * 1024
-	blockIOThresholdHigh   = 500 * 1024 * 1024
+	cpuThresholdLow         = 50
+	cpuThresholdMedium      = 80
+	cpuThresholdHigh        = 90
+	memThresholdLow         = 50
+	memThresholdMedium      = 80
+	memThresholdHigh        = 90
+	memUsageThresholdHigh   = 0.8
+	memUsageThresholdMedium = 0.5
 )
 
 type DockerStats struct{}
@@ -84,11 +81,11 @@ func (c *DockerStats) Name(v string) string {
 
 func (c *DockerStats) CPUPerc(v string) string {
 	switch {
-	case number.ParseFloat(v) >= cpuThresholdHigh:
-		return color.Brown(v)
-	case number.ParseFloat(v) >= cpuThresholdMedium:
-		return color.Yellow(v)
 	case number.ParseFloat(v) >= cpuThresholdLow:
+		return color.Yellow(v)
+	case number.ParseFloat(v) >= cpuThresholdMedium:
+		return color.Brown(v)
+	case number.ParseFloat(v) >= cpuThresholdHigh:
 		return color.Red(v)
 	default:
 		return color.Green(v)
@@ -97,27 +94,32 @@ func (c *DockerStats) CPUPerc(v string) string {
 
 func (c *DockerStats) MemUsage(v string) string {
 	memUsage := strings.Split(v, "/")[0]
+	limit := strings.Split(v, "/")[1]
 
-	switch {
-	case number.ParseBytes(memUsage) >= memThresholdHigh:
+	memUsageInt, _ := strconv.Atoi(strings.TrimSpace(memUsage))
+	limitInt, _ := strconv.Atoi(strings.TrimSpace(limit))
+
+	memPerLimit := float64(memUsageInt) / float64(limitInt)
+
+	if memPerLimit >= memUsageThresholdHigh {
 		return color.Red(v)
-	case number.ParseBytes(memUsage) >= memThresholdMedium:
-		return color.Yellow(v)
-	case number.ParseBytes(memUsage) >= memThresholdLow:
-		return color.Brown(memUsage)
-	default:
-		return color.Green(memUsage)
 	}
+
+	if memPerLimit >= memUsageThresholdMedium {
+		return color.Brown(v)
+	}
+
+	return color.Green(v)
 }
 
 func (c *DockerStats) MemPerc(v string) string {
 	switch {
-	case number.ParseFloat(v) >= cpuThresholdHigh:
-		return color.Red(v)
-	case number.ParseFloat(v) >= cpuThresholdMedium:
-		return color.Yellow(v)
-	case number.ParseFloat(v) >= cpuThresholdLow:
+	case number.ParseFloat(v) >= memThresholdLow:
 		return color.Brown(v)
+	case number.ParseFloat(v) >= memThresholdMedium:
+		return color.Yellow(v)
+	case number.ParseFloat(v) >= memThresholdHigh:
+		return color.Red(v)
 	default:
 		return color.Green(v)
 	}
@@ -126,31 +128,29 @@ func (c *DockerStats) MemPerc(v string) string {
 func (*DockerStats) NetIO(v string) string {
 	netIO := number.ParseBytes(v)
 
-	switch {
-	case netIO >= netIOThresholdHigh || strings.Contains(v, "GB"):
+	if strings.Contains(v, "GB") {
 		return color.Red(v)
-	case netIO >= netIOThresholdMedium || strings.Contains(v, "MB"):
-		return color.Yellow(v)
-	case netIO >= netIOThresholdLow || strings.Contains(v, "kB"):
-		return color.Brown(v)
-	default:
-		return v
 	}
+
+	if strings.Contains(v, "MB") && netIO >= 500 {
+		return color.Brown(v)
+	}
+
+	return v
 }
 
 func (*DockerStats) BlockIO(v string) string {
 	blockIO := number.ParseBytes(v)
 
-	switch {
-	case blockIO >= blockIOThresholdHigh || strings.Contains(v, "GB"):
+	if strings.Contains(v, "GB") {
 		return color.Red(v)
-	case blockIO >= blockIOThresholdMedium || strings.Contains(v, "MB"):
-		return color.Yellow(v)
-	case blockIO >= blockIOThresholdLow || strings.Contains(v, "kB"):
-		return color.Brown(v)
-	default:
-		return v
 	}
+
+	if strings.Contains(v, "MB") && blockIO >= 500 {
+		return color.Brown(v)
+	}
+
+	return v
 }
 
 func (*DockerStats) PIDs(v string) string {
