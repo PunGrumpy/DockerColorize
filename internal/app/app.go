@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	ErrNoFirstLine     = errors.New("no first line")
-	ErrNullableColumns = errors.New("nullable columns more than one")
+	ErrNoFirstLine     = errors.New("unable to parse first line")
+	ErrNullableColumns = errors.New("unable to parse nullable columns")
 )
 
 func Run(in []string) ([]string, error) {

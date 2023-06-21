@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var ErrNoStdin = errors.New("no stdin")
+var ErrNoStdin = errors.New("unable to read from stdin")
 
 func Get() ([]string, error) {
 	fi, err := os.Stdin.Stat()
