@@ -115,3 +115,11 @@ dstats # alias
 ```bash
 docker stats --no-stream | docker-color-output
 ```
+
+#### 💡 docker history
+
+⚠️ It's cannot be used with aliases because it's a subcommand.
+
+```bash
+docker history [container] [--format] | docker-color-output
+```
