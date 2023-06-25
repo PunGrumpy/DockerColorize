@@ -1,0 +1,3 @@
+[1;34mCONTAINER ID[0m   [1;34mNAME[0m                            [1;34mCPU %[0m   [1;34mMEM USAGE / LIMIT[0m     [1;34mMEM %[0m   [1;34mNET I/O[0m           [1;34mBLOCK I/O[0m         [1;34mPIDS[0m   
+[1;30m04d8c6673f77[0m   [1;37mmephisto-discord-bot-ts-bot-1[0m   [0;32m0.00%[0m   [0;32m138.3MiB / 1.917GiB[0m   [0;32m7.04%[0m   [1;32m31.6MB / 5.51MB[0m   [1;32m137MB / 2.75MB[0m    [1;32m22[0m     
+[1;30mb65f7277d93f[0m   [1;37mgithub-bot[0m                      [0;32m0.03%[0m   [0;32m90.38MiB / 1.917GiB[0m   [0;32m4.60%[0m   [1;32m3.09MB / 1.95MB[0m   [1;32m92.5MB / 8.19kB[0m   [1;32m30[0m     

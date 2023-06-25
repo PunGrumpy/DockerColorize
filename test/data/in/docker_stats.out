@@ -1,0 +1,3 @@
+CONTAINER ID   NAME                            CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+04d8c6673f77   mephisto-discord-bot-ts-bot-1   0.00%     138.3MiB / 1.917GiB   7.04%     31.6MB / 5.51MB   137MB / 2.75MB    22
+b65f7277d93f   github-bot                      0.12%     90.37MiB / 1.917GiB   4.60%     3.09MB / 1.95MB   92.5MB / 8.19kB   30
