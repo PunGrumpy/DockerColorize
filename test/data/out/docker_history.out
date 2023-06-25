@@ -1,17 +1,11 @@
-[1;34mIMAGE[0m          [1;34mCREATED[0m        [1;34mCREATED BY[0m                                      [1;34mSIZE[0m                         [1;34mCOMMENT[0m                  
-[1;33mfcd98d6d13fe[0m   [0;32m4 weeks ago[0m    [1;32mCMD ["pnpm" "start"][0m                            0B                           [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mRUN /bin/sh -c npm install -g pm2 # buildkit[0m    32.9MB                       [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mRUN /bin/sh -c npm install -g pnpm && pnpm i…[0m   335MB                        [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mRUN /bin/sh -c apk update && apk add --no-ca…[0m   104MB                        [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mCOPY /app/package.json /app/pnpm-lock.yaml .…[0m   92.2kB                       [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mCOPY /app/build ./build # buildkit[0m              99.1kB                       [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;32m4 weeks ago[0m    [1;32mWORKDIR /app[0m                                    0B                           [1;30mbuildkit.dockerfile.v0[0m   
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop)[0m                               CMD ["node"]                 [1;30m0B[0m                       
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop)[0m                               ENTRYPOINT ["docker-entry…   [1;30m0B[0m                       
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop) COPY file:4d192565a7220e13…[0m   388B                         [1;30m[0m                         
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c apk add --no-cache --virtual .bui…[0m   7.78MB                       [1;30m[0m                         
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop)[0m                               ENV YARN_VERSION=1.22.19     [1;30m0B[0m                       
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c addgroup -g 1000 node[0m                && addu…                     [1;30m162MB[0m                    
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop)[0m                               ENV NODE_VERSION=19.9.0      [1;30m0B[0m                       
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop)[0m                               CMD ["/bin/sh"]              [1;30m0B[0m                       
-[0;31m<missing>[0m      [0;33m2 months ago[0m   [1;32m/bin/sh -c #(nop) ADD file:9a4f77dfaba7fd2aa…[0m   7.05MB                       [1;30m[0m                         
+[1;34mIMAGE[0m          [1;34mCREATED[0m       [1;34mCREATED BY[0m                                      [1;34mSIZE[0m     [1;34mCOMMENT[0m   
+[1;33m6b362a9f73eb[0m   [0;31m8 years ago[0m   [1;32m/bin/sh -c #(nop) ENV PATH=/usr/local/bin:/u…[0m   0B       [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c sh install.sh[0m                        30.4kB   [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c git reset --hard origin/master[0m       43.3kB   [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c #(nop) WORKDIR /cowsay[0m               0B       [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c git clone https://github.com/moxi…[0m   89.9kB   [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c apt-get -y update && apt-get inst…[0m   58.6MB   [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c #(nop) CMD ["/bin/bash"][0m             0B       [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c sed -i 's/^#\s*\(deb.*universe\)$…[0m   1.9kB    [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c echo '#!/bin/sh' > /usr/sbin/poli…[0m   195kB    [1;30m[0m          
+[0;31m<missing>[0m      [0;31m8 years ago[0m   [1;32m/bin/sh -c #(nop) ADD file:f4d7b4b3402b5c53f…[0m   188MB    [1;30m[0m          
