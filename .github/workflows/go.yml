@@ -70,8 +70,7 @@ jobs:
 
           if [[ $OLD_VER != $NEW_VER ]]; then
             echo "Version updated from $OLD_VER to $NEW_VER"
-            echo $NEW_VER > $VER_FILE}
-            sed -i "4s/.*/PROJECT_VERSION='$NEW_VER'/" install.sh
+            echo $NEW_VER > $VER_FILE
             git config user.name "Automated"
             git config user.email "108584943+PunGrumpy@users.noreply.github.com"
             git add $VER_FILE
