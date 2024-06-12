@@ -17,7 +17,7 @@ func TestRun(t *testing.T) {
 	read := func(filename string) []string {
 		_, b, _, _ := runtime.Caller(0)
 		path := filepath.Dir(b)
-		bytes, _ := os.ReadFile(filepath.Clean(path + "/testdata/" + filename))
+		bytes, _ := os.ReadFile(filepath.Clean(path + "/../../test/data/" + filename))
 		res := strings.Split(string(bytes), "\n")
 		res = res[:len(res)-1]
 
