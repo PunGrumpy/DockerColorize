@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 type Config struct {
@@ -38,35 +39,38 @@ type AppConfigProvider struct {
 const (
 	DefaultFilePermissions = 0o644
 	DefaultDirPermissions  = 0o755
+	DefaultConfigFile      = "config.json"
+	ConfigEnvVar           = "DOCKERCOLORIZE_CONFIG"
 )
+
+var defaultConfig = Config{
+	Color: ColorConfig{
+		Reset:       "\033[0m",
+		Black:       "\033[0;30m",
+		DarkGray:    "\033[1;30m",
+		Red:         "\033[0;31m",
+		LightRed:    "\033[1;31m",
+		Green:       "\033[0;32m",
+		LightGreen:  "\033[1;32m",
+		Brown:       "\033[0;33m",
+		Yellow:      "\033[1;33m",
+		Blue:        "\033[0;34m",
+		LightBlue:   "\033[1;34m",
+		Purple:      "\033[0;35m",
+		LightPurple: "\033[1;35m",
+		Cyan:        "\033[0;36m",
+		LightCyan:   "\033[1;36m",
+		LightGray:   "\033[0;37m",
+		White:       "\033[1;37m",
+	},
+}
 
 func NewAppConfigProvider() *AppConfigProvider {
 	provider := &AppConfigProvider{
-		AppConfig: Config{
-			Color: ColorConfig{
-				Reset:       "\033[0m",
-				Black:       "\033[0;30m",
-				DarkGray:    "\033[1;30m",
-				Red:         "\033[0;31m",
-				LightRed:    "\033[1;31m",
-				Green:       "\033[0;32m",
-				LightGreen:  "\033[1;32m",
-				Brown:       "\033[0;33m",
-				Yellow:      "\033[1;33m",
-				Blue:        "\033[0;34m",
-				LightBlue:   "\033[1;34m",
-				Purple:      "\033[0;35m",
-				LightPurple: "\033[1;35m",
-				Cyan:        "\033[0;36m",
-				LightCyan:   "\033[1;36m",
-				LightGray:   "\033[0;37m",
-				White:       "\033[1;37m",
-			},
-		},
+		AppConfig: defaultConfig,
 	}
 	provider.createDefaultConfigIfNotExists()
 	provider.LoadConfig()
-
 	return provider
 }
 
@@ -77,73 +81,56 @@ func SetConfigProvider(provider *AppConfigProvider) {
 var AppConfig Config //nolint:gochecknoglobals
 
 func (a *AppConfigProvider) createDefaultConfigIfNotExists() {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatalf("failed to get home dir: %s", err)
-	}
-
-	defaultConfigPath := fmt.Sprintf("%s/.config/dockercolorize/config.json", home)
-	_, err = os.Stat(defaultConfigPath)
-
-	if os.IsNotExist(err) {
-		err = os.MkdirAll(home+"/.config/dockercolorize", DefaultDirPermissions)
-
-		if err != nil {
-			log.Fatalf("failed to create directory: %s", err)
+	configPath := a.getConfigPath()
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		if err := os.MkdirAll(filepath.Dir(configPath), DefaultDirPermissions); err != nil {
+			log.Printf("failed to create config directory: %v", err)
+			return
 		}
 
-		a.AppConfig = Config{
-			Color: ColorConfig{
-				Reset:       "\033[0m",
-				Black:       "\033[0;30m",
-				DarkGray:    "\033[1;30m",
-				Red:         "\033[0;31m",
-				LightRed:    "\033[1;31m",
-				Green:       "\033[0;32m",
-				LightGreen:  "\033[1;32m",
-				Brown:       "\033[0;33m",
-				Yellow:      "\033[1;33m",
-				Blue:        "\033[0;34m",
-				LightBlue:   "\033[1;34m",
-				Purple:      "\033[0;35m",
-				LightPurple: "\033[1;35m",
-				Cyan:        "\033[0;36m",
-				LightCyan:   "\033[1;36m",
-				LightGray:   "\033[0;37m",
-				White:       "\033[1;37m",
-			},
-		}
-
-		defaultConfigFile, err := json.MarshalIndent(a.AppConfig, "", " ")
-		if err != nil {
-			log.Fatalf("failed to marshal default config: %s", err)
-		}
-
-		err = os.WriteFile(defaultConfigPath, defaultConfigFile, DefaultFilePermissions)
-
-		if err != nil {
-			log.Fatalf("failed to write default config file: %s", err)
+		if err := a.writeConfig(configPath, defaultConfig); err != nil {
+			log.Printf("failed to write default config: %v", err)
 		}
 	} else if err != nil {
-		log.Fatalf("failed to check config file existence: %s", err)
+		log.Printf("failed to check config file existence: %v", err)
 	}
 }
 
 func (a *AppConfigProvider) LoadConfig() {
+	configPath := a.getConfigPath()
+	configFile, err := os.ReadFile(configPath)
+	if err != nil {
+		log.Printf("failed to read config file: %v", err)
+		return
+	}
+
+	if err := json.Unmarshal(configFile, &a.AppConfig); err != nil {
+		log.Printf("failed to unmarshal config file: %v", err)
+	}
+}
+
+func (a *AppConfigProvider) getConfigPath() string {
+	if configPath := os.Getenv(ConfigEnvVar); configPath != "" {
+		return configPath
+	}
+
 	home, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatalf("failed to get home dir: %s", err)
+		log.Printf("failed to get home dir: %v", err)
+		return DefaultConfigFile
 	}
 
-	configFilePath := home + "/.config/dockercolorize/config.json"
+	return filepath.Join(home, ".config", "dockercolorize", DefaultConfigFile)
+}
 
-	configFile, err := os.ReadFile(configFilePath)
+func (a *AppConfigProvider) writeConfig(path string, config Config) error {
+	configData, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
-		log.Fatalf("failed to read config file: %s", err)
+		return fmt.Errorf("failed to marshal config: %w", err)
 	}
 
-	err = json.Unmarshal(configFile, &a.AppConfig)
-	if err != nil {
-		log.Fatalf("failed to unmarshal config file: %s", err)
+	if err := os.WriteFile(path, configData, DefaultFilePermissions); err != nil {
+		return fmt.Errorf("failed to write config file: %w", err)
 	}
+	return nil
 }
