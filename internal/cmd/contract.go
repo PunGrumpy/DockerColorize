@@ -7,5 +7,5 @@ import (
 const ValidTotalParts = 2
 
 type Command interface {
-	Format(layout.Row, layout.Column) string
+	Format(row layout.Row, column layout.Column) string
 }

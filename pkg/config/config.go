@@ -43,7 +43,7 @@ const (
 	ConfigEnvVar           = "DOCKERCOLORIZE_CONFIG"
 )
 
-var defaultConfig = Config{
+var defaultConfig = Config{ //nolint:gochecknoglobals
 	Color: ColorConfig{
 		Reset:       "\033[0m",
 		Black:       "\033[0;30m",
@@ -71,6 +71,7 @@ func NewAppConfigProvider() *AppConfigProvider {
 	}
 	provider.createDefaultConfigIfNotExists()
 	provider.LoadConfig()
+
 	return provider
 }
 
@@ -98,7 +99,8 @@ func (a *AppConfigProvider) createDefaultConfigIfNotExists() {
 
 func (a *AppConfigProvider) LoadConfig() {
 	configPath := a.getConfigPath()
-	configFile, err := os.ReadFile(configPath)
+
+	configFile, err := os.ReadFile(filepath.Clean(configPath))
 	if err != nil {
 		log.Printf("failed to read config file: %v", err)
 		return
@@ -132,5 +134,6 @@ func (a *AppConfigProvider) writeConfig(path string, config Config) error {
 	if err := os.WriteFile(path, configData, DefaultFilePermissions); err != nil {
 		return fmt.Errorf("failed to write config file: %w", err)
 	}
+
 	return nil
 }

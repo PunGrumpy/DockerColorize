@@ -2,6 +2,14 @@ linters:
   enable-all: true
   disable:
     - depguard
+    - execinquery
+    - gomnd
+    - copyloopvar
+    - intrange
+    - revive
+    - stylecheck
+    - exhaustruct
+    - nlreturn
 
 linters-settings:
   gofumpt:
@@ -10,3 +18,14 @@ linters-settings:
     ignore-names: [i, in, j, m, sb, tt, v]
   wrapcheck:
     ignorePackageGlobs: [dockercolorize/internal/*]
+
+issues:
+  exclude-use-default: false
+  exclude:
+    - gochecknoglobals
+    - inamedparam
+    - nlreturn
+    - wsl
+
+linters_context:
+  go_version: 1.20

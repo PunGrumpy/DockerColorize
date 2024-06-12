@@ -54,6 +54,7 @@ func TestParseBytes(t *testing.T) {
 
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
+
 			got := number.ParseBytes(tt.in)
 			assert.Equal(t, tt.want, got)
 		})

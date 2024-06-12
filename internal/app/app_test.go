@@ -17,7 +17,7 @@ func TestRun(t *testing.T) {
 	read := func(filename string) []string {
 		_, b, _, _ := runtime.Caller(0)
 		path := filepath.Dir(b)
-		bytes, _ := os.ReadFile(path + "/../../test/data/" + filename)
+		bytes, _ := os.ReadFile(filepath.Clean(path + "/testdata/" + filename))
 		res := strings.Split(string(bytes), "\n")
 		res = res[:len(res)-1]
 
@@ -52,6 +52,7 @@ func TestRun(t *testing.T) {
 
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
+
 			rows, err := app.Run(read("in/" + tt.in))
 			assert.Equal(t, tt.wantErr, err != nil)
 			assert.Equal(t, read("out/"+tt.want), rows)
