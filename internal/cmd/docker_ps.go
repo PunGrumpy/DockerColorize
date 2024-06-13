@@ -73,6 +73,7 @@ func (*DockerPs) Image(v string) string {
 	if len(parts) == ValidTotalParts {
 		return color.Yellow(parts[0]) + color.LightGreen(":"+parts[1])
 	}
+
 	return color.Yellow(v)
 }
 
@@ -95,18 +96,22 @@ func (*DockerPs) Status(v string) string {
 	if strings.Contains(v, "Exited") {
 		return color.Red(v)
 	}
+
 	return color.LightGreen(v)
 }
 
 func (*DockerPs) Ports(v string) string {
 	var ports []string
+
 	for _, port := range strings.Split(v, ", ") {
 		parts := strings.Split(port, "->")
 		if len(parts) == ValidTotalParts {
 			port = color.LightCyan(parts[0]) + "->" + parts[1]
 		}
+
 		ports = append(ports, port)
 	}
+
 	return strings.Join(ports, ", ")
 }
 

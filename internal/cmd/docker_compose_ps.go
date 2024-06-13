@@ -56,6 +56,7 @@ func (*DockerComposePs) Name(v string, row layout.Row) string {
 	if strings.Contains(string(row[DockerComposePsStatus]), "exited") {
 		return color.DarkGray(v)
 	}
+
 	return color.White(v)
 }
 
@@ -64,6 +65,7 @@ func (*DockerComposePs) Image(v string) string {
 	if len(parts) == ValidTotalParts {
 		return color.Yellow(parts[0]) + color.LightGreen(":"+parts[1])
 	}
+
 	return color.Yellow(v)
 }
 
@@ -75,6 +77,7 @@ func (*DockerComposePs) Service(v string, row layout.Row) string {
 	if strings.Contains(string(row[DockerComposePsStatus]), "exited") {
 		return color.DarkGray(v)
 	}
+
 	return color.Yellow(v)
 }
 
@@ -93,17 +96,21 @@ func (*DockerComposePs) Status(v string) string {
 	if strings.Contains(v, "exited") {
 		return color.Red(v)
 	}
+
 	return color.LightGreen(v)
 }
 
 func (*DockerComposePs) Ports(v string) string {
 	var ports []string
+
 	for _, port := range strings.Split(v, ", ") {
 		parts := strings.Split(port, "->")
 		if len(parts) == ValidTotalParts {
 			port = color.LightCyan(parts[0]) + "->" + parts[1]
 		}
+
 		ports = append(ports, port)
 	}
+
 	return strings.Join(ports, ", ")
 }

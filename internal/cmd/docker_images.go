@@ -55,6 +55,7 @@ func (*DockerImages) Repository(v string) string {
 	if strings.Contains(v, "/") {
 		return color.DarkGray(v)
 	}
+
 	return color.White(v)
 }
 
@@ -62,6 +63,7 @@ func (*DockerImages) Tag(v string) string {
 	if v == "latest" {
 		return color.LightGreen(v)
 	}
+
 	return v
 }
 

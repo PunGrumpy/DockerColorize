@@ -29,6 +29,7 @@ const (
 	memThresholdHigh        = 90
 	memUsageThresholdHigh   = 0.8
 	memUsageThresholdMedium = 0.5
+	memUsageParse           = 2
 )
 
 type DockerStats struct{}
@@ -78,6 +79,7 @@ func (c *DockerStats) Name(v string) string {
 
 func (c *DockerStats) CPUPerc(v string) string {
 	cpu := number.ParseFloat(v)
+
 	switch {
 	case cpu >= cpuThresholdHigh:
 		return color.Red(v)
@@ -92,7 +94,7 @@ func (c *DockerStats) CPUPerc(v string) string {
 
 func (c *DockerStats) MemUsage(v string) string {
 	parts := strings.Split(v, "/")
-	if len(parts) != 2 {
+	if len(parts) != memUsageParse {
 		return v
 	}
 
@@ -120,6 +122,7 @@ func (c *DockerStats) MemUsage(v string) string {
 
 func (c *DockerStats) MemPerc(v string) string {
 	mem := number.ParseFloat(v)
+
 	switch {
 	case mem >= memThresholdHigh:
 		return color.Red(v)

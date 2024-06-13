@@ -10,6 +10,8 @@ linters:
     - stylecheck
     - exhaustruct
     - nlreturn
+    - prealloc
+    - ireturn
 
 linters-settings:
   gofumpt:
@@ -26,6 +28,3 @@ issues:
     - inamedparam
     - nlreturn
     - wsl
-
-linters_context:
-  go_version: 1.20

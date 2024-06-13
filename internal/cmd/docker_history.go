@@ -52,9 +52,11 @@ func (c *DockerHistory) Image(v string) string {
 	if len(parts) == ValidTotalParts {
 		return color.Yellow(parts[0]) + color.LightGreen(":"+parts[1])
 	}
+
 	if strings.Contains(v, "<missing>") {
 		return color.Red(v)
 	}
+
 	return color.Yellow(v)
 }
 
