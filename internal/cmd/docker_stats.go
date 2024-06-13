@@ -35,40 +35,37 @@ type DockerStats struct{}
 
 func (c *DockerStats) Columns() []string {
 	return []string{
-		DockerStatsContainerID, //
-		DockerStatsName,        //
-		DockerStatsCPUPerc,     //
-		DockerStatsMemUsage,    //
-		DockerStatsMemPerc,     //
-		DockerStatsNetIO,       //
-		DockerStatsBlockIO,     //
-		DockerStatsPIDs,        //
+		DockerStatsContainerID,
+		DockerStatsName,
+		DockerStatsCPUPerc,
+		DockerStatsMemUsage,
+		DockerStatsMemPerc,
+		DockerStatsNetIO,
+		DockerStatsBlockIO,
+		DockerStatsPIDs,
 	}
 }
 
 func (c *DockerStats) Format(rows layout.Row, col layout.Column) string {
 	v := string(rows[col])
 
-	switch col {
-	case DockerStatsContainerID:
-		return c.ContainerID(v)
-	case DockerStatsName:
-		return c.Name(v)
-	case DockerStatsCPUPerc:
-		return c.CPUPerc(v)
-	case DockerStatsMemUsage:
-		return c.MemUsage(v)
-	case DockerStatsMemPerc:
-		return c.MemPerc(v)
-	case DockerStatsNetIO:
-		return c.NetIO(v)
-	case DockerStatsBlockIO:
-		return c.BlockIO(v)
-	case DockerStatsPIDs:
-		return c.PIDs(v)
-	default:
-		return v
+	formatters := map[string]func(string) string{
+		DockerStatsContainerID: c.ContainerID,
+		DockerStatsName:        c.Name,
+		DockerStatsCPUPerc:     c.CPUPerc,
+		DockerStatsMemUsage:    c.MemUsage,
+		DockerStatsMemPerc:     c.MemPerc,
+		DockerStatsNetIO:       c.NetIO,
+		DockerStatsBlockIO:     c.BlockIO,
+		DockerStatsPIDs:        c.PIDs,
 	}
+
+	colString := string(col)
+	if formatter, exists := formatters[colString]; exists {
+		return formatter(v)
+	}
+
+	return v
 }
 
 func (c *DockerStats) ContainerID(v string) string {
@@ -80,79 +77,82 @@ func (c *DockerStats) Name(v string) string {
 }
 
 func (c *DockerStats) CPUPerc(v string) string {
+	cpu := number.ParseFloat(v)
 	switch {
-	case number.ParseFloat(v) >= cpuThresholdLow:
-		return color.Yellow(v)
-	case number.ParseFloat(v) >= cpuThresholdMedium:
-		return color.Brown(v)
-	case number.ParseFloat(v) >= cpuThresholdHigh:
+	case cpu >= cpuThresholdHigh:
 		return color.Red(v)
+	case cpu >= cpuThresholdMedium:
+		return color.Brown(v)
+	case cpu >= cpuThresholdLow:
+		return color.Yellow(v)
 	default:
 		return color.Green(v)
 	}
 }
 
 func (c *DockerStats) MemUsage(v string) string {
-	memUsage := strings.Split(v, "/")[0]
-	limit := strings.Split(v, "/")[1]
+	parts := strings.Split(v, "/")
+	if len(parts) != 2 {
+		return v
+	}
 
-	memUsageInt, _ := strconv.Atoi(strings.TrimSpace(memUsage))
-	limitInt, _ := strconv.Atoi(strings.TrimSpace(limit))
+	memUsage := strings.TrimSpace(parts[0])
+	limit := strings.TrimSpace(parts[1])
+
+	memUsageInt, err1 := strconv.Atoi(memUsage)
+	limitInt, err2 := strconv.Atoi(limit)
+
+	if err1 != nil || err2 != nil {
+		return v
+	}
 
 	memPerLimit := float64(memUsageInt) / float64(limitInt)
 
-	if memPerLimit >= memUsageThresholdHigh {
-		return color.Red(v)
-	}
-
-	if memPerLimit >= memUsageThresholdMedium {
-		return color.Brown(v)
-	}
-
-	return color.Green(v)
-}
-
-func (c *DockerStats) MemPerc(v string) string {
 	switch {
-	case number.ParseFloat(v) >= memThresholdLow:
-		return color.Brown(v)
-	case number.ParseFloat(v) >= memThresholdMedium:
-		return color.Yellow(v)
-	case number.ParseFloat(v) >= memThresholdHigh:
+	case memPerLimit >= memUsageThresholdHigh:
 		return color.Red(v)
+	case memPerLimit >= memUsageThresholdMedium:
+		return color.Brown(v)
 	default:
 		return color.Green(v)
 	}
 }
 
-func (*DockerStats) NetIO(v string) string {
-	netIO := number.ParseBytes(v)
-
-	if strings.Contains(v, "GB") {
+func (c *DockerStats) MemPerc(v string) string {
+	mem := number.ParseFloat(v)
+	switch {
+	case mem >= memThresholdHigh:
 		return color.Red(v)
-	}
-
-	if strings.Contains(v, "MB") && netIO >= 500 {
+	case mem >= memThresholdMedium:
 		return color.Brown(v)
+	case mem >= memThresholdLow:
+		return color.Yellow(v)
+	default:
+		return color.Green(v)
 	}
-
-	return color.LightGreen(v)
 }
 
-func (*DockerStats) BlockIO(v string) string {
-	blockIO := number.ParseBytes(v)
-
-	if strings.Contains(v, "GB") {
-		return color.Red(v)
-	}
-
-	if strings.Contains(v, "MB") && blockIO >= 500 {
-		return color.Brown(v)
-	}
-
-	return color.LightGreen(v)
+func (c *DockerStats) NetIO(v string) string {
+	return c.ioFormatter(v)
 }
 
-func (*DockerStats) PIDs(v string) string {
+func (c *DockerStats) BlockIO(v string) string {
+	return c.ioFormatter(v)
+}
+
+func (c *DockerStats) ioFormatter(v string) string {
+	io := number.ParseBytes(v)
+
+	switch {
+	case strings.Contains(v, "GB"):
+		return color.Red(v)
+	case strings.Contains(v, "MB") && io >= 500:
+		return color.Brown(v)
+	default:
+		return color.LightGreen(v)
+	}
+}
+
+func (c *DockerStats) PIDs(v string) string {
 	return color.LightGreen(v)
 }
