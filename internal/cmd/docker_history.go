@@ -20,56 +20,53 @@ type DockerHistory struct{}
 
 func (c *DockerHistory) Columns() []string {
 	return []string{
-		DockerHistoryImage,     //
-		DockerHistoryCreated,   //
-		DockerHistoryCreatedBy, //
-		DockerHistorySize,      //
-		DockerHistoryComment,   //
+		DockerHistoryImage,
+		DockerHistoryCreated,
+		DockerHistoryCreatedBy,
+		DockerHistorySize,
+		DockerHistoryComment,
 	}
 }
 
 func (c *DockerHistory) Format(rows layout.Row, col layout.Column) string {
 	v := string(rows[col])
 
-	switch col {
-	case DockerHistoryImage:
-		return c.Image(v)
-	case DockerHistoryCreated:
-		return c.Created(v)
-	case DockerHistoryCreatedBy:
-		return c.CreatedBy(v)
-	case DockerHistorySize:
-		return c.Size(v)
-	case DockerHistoryComment:
-		return c.Comment(v)
+	formatters := map[string]func(string) string{
+		DockerHistoryImage:     c.Image,
+		DockerHistoryCreated:   c.Created,
+		DockerHistoryCreatedBy: c.CreatedBy,
+		DockerHistorySize:      c.Size,
+		DockerHistoryComment:   c.Comment,
+	}
+
+	colString := string(col)
+	if formatter, exists := formatters[colString]; exists {
+		return formatter(v)
 	}
 
 	return v
 }
 
 func (c *DockerHistory) Image(v string) string {
-	parts := strings.Split(v, ":") //nolint:ifshort
+	parts := strings.Split(v, ":")
 	if len(parts) == ValidTotalParts {
 		return color.Yellow(parts[0]) + color.LightGreen(":"+parts[1])
 	}
-
 	if strings.Contains(v, "<missing>") {
 		return color.Red(v)
 	}
-
 	return color.Yellow(v)
 }
 
 func (c *DockerHistory) Created(v string) string {
-	if strings.Contains(v, "months") {
+	switch {
+	case strings.Contains(v, "months"):
 		return color.Brown(v)
-	}
-
-	if strings.Contains(v, "years") {
+	case strings.Contains(v, "years"):
 		return color.Red(v)
+	default:
+		return color.Green(v)
 	}
-
-	return color.Green(v)
 }
 
 func (c *DockerHistory) CreatedBy(v string) string {
@@ -77,15 +74,14 @@ func (c *DockerHistory) CreatedBy(v string) string {
 }
 
 func (c *DockerHistory) Size(v string) string {
-	if strings.Contains(v, "GB") {
+	switch {
+	case strings.Contains(v, "GB"):
 		return color.Red(v)
-	}
-
-	if strings.Contains(v, "MB") && number.ParseFloat(v) >= 500 {
+	case strings.Contains(v, "MB") && number.ParseFloat(v) >= 500:
 		return color.Brown(v)
+	default:
+		return v
 	}
-
-	return v
 }
 
 func (c *DockerHistory) Comment(v string) string {

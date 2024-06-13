@@ -22,40 +22,39 @@ type DockerImages struct{}
 
 func (c *DockerImages) Columns() []string {
 	return []string{
-		DockerImagesImageID,    //
-		DockerImagesRepository, //
-		DockerImagesTag,        //
-		DockerImagesDigest,     // opt
-		DockerImagesCreated,    //
-		DockerImagesCreatedAt,  // opt
-		DockerImagesSize,       //
+		DockerImagesImageID,
+		DockerImagesRepository,
+		DockerImagesTag,
+		DockerImagesDigest,
+		DockerImagesCreated,
+		DockerImagesCreatedAt,
+		DockerImagesSize,
 	}
 }
 
 func (c *DockerImages) Format(row layout.Row, col layout.Column) string {
 	v := string(row[col])
 
-	switch col {
-	case DockerImagesRepository:
-		return c.Repository(v)
-	case DockerImagesTag:
-		return c.Tag(v)
-	case DockerImagesImageID:
-		return c.ImageID(v)
-	case DockerImagesCreated:
-		return c.Created(v)
-	case DockerImagesSize:
-		return c.Size(v)
-	default:
-		return v
+	formatters := map[string]func(string) string{
+		DockerImagesRepository: c.Repository,
+		DockerImagesTag:        c.Tag,
+		DockerImagesImageID:    c.ImageID,
+		DockerImagesCreated:    c.Created,
+		DockerImagesSize:       c.Size,
 	}
+
+	colString := string(col)
+	if formatter, exists := formatters[colString]; exists {
+		return formatter(v)
+	}
+
+	return v
 }
 
 func (*DockerImages) Repository(v string) string {
 	if strings.Contains(v, "/") {
 		return color.DarkGray(v)
 	}
-
 	return color.White(v)
 }
 
@@ -63,7 +62,6 @@ func (*DockerImages) Tag(v string) string {
 	if v == "latest" {
 		return color.LightGreen(v)
 	}
-
 	return v
 }
 
@@ -72,37 +70,27 @@ func (*DockerImages) ImageID(v string) string {
 }
 
 func (*DockerImages) Created(v string) string {
-	if strings.Contains(v, "hour") {
+	switch {
+	case strings.Contains(v, "hour"):
 		return color.Green(v)
-	}
-
-	if strings.Contains(v, "days") {
+	case strings.Contains(v, "days"), strings.Contains(v, "weeks"):
 		return color.Green(v)
-	}
-
-	if strings.Contains(v, "weeks") {
-		return color.Green(v)
-	}
-
-	if strings.Contains(v, "months") {
+	case strings.Contains(v, "months"):
 		return color.Brown(v)
-	}
-
-	if strings.Contains(v, "years") {
+	case strings.Contains(v, "years"):
 		return color.Red(v)
+	default:
+		return v
 	}
-
-	return v
 }
 
 func (*DockerImages) Size(v string) string {
-	if strings.Contains(v, "GB") {
+	switch {
+	case strings.Contains(v, "GB"):
 		return color.Red(v)
-	}
-
-	if strings.Contains(v, "MB") && number.ParseFloat(v) >= 500 {
+	case strings.Contains(v, "MB") && number.ParseFloat(v) >= 500:
 		return color.Brown(v)
+	default:
+		return v
 	}
-
-	return v
 }
