@@ -55,26 +55,26 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: 'go'
       - name: Download Artifact
-        if: steps.release.outputs.releases_created
+        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/download-artifact@v4
         with:
           name: build
           path: bin/
       - name: Update Version
-        if: steps.release.outputs.releases_created
+        if: ${{ steps.release.outputs.releases_created }}
         run: |
-          echo "${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}" > .version
-          sed -i "s/Ver = \".*\"/Ver = \"${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}\"/g" internal/app/const.go
+          echo "${{steps.release.outputs.tag_name }}" > .version
+          sed -i "s/Ver = \".*\"/Ver = \"${{steps.release.outputs.tag_name }}\"/g" internal/app/const.go
       - name: Commit Version
-        if: steps.release.outputs.releases_created
+        if: ${{ steps.release.outputs.releases_created }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .version internal/app/const.go
-          git commit -m "chore: update version in app (${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }})"
+          git commit -m "chore: update version in app (${{steps.release.outputs.tag_name }})"
           git push origin ${{ steps.release.outputs.pr['headBranchName'] }}
       - name: Push Artifact
-        if: steps.release.outputs.releases_created
-        run: gh release upload v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }} bin/*
+        if: ${{ steps.release.outputs.releases_created }}
+        run: gh release upload ${{steps.release.outputs.tag_name }} bin/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
