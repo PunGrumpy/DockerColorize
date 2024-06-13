@@ -59,6 +59,18 @@ jobs:
       - name: Update Version
         if: steps.pleaes-release.outputs.releases_created
         run: |
-          echo "VERSION=${{ steps.pleaes-release.outputs.major }}.${{ steps.pleaes-release.outputs.minor }}.${{ steps.pleaes-release.outputs.patch }}" >> $GITHUB_ENV
-          echo "${{ env.VERSION }}" > ".version"
-          sed -i "s/Ver = \".*\"/Ver = \"${{ env.VERSION }}\"/g" internal/app/const.go
+          echo "${{ steps.pleaes-release.outputs.tag_name }}" > ".version"
+          sed -i "s/Ver = \".*\"/Ver = \"${{ steps.pleaes-release.outputs.tag_name }}\"/g" internal/app/const.go
+      - name: Commit Version
+        if: steps.pleaes-release.outputs.releases_created
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .version internal/app/const.go
+          git commit -m "chore: release ${{ steps.pleaes-release.outputs.tag_name }}"
+          git push origin HEAD:main
+      - name: Push Artifact
+        if: steps.pleaes-release.outputs.releases_created
+        run: gh release upload ${{ steps.pleaes-release.outputs.tag_name }} bin/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
