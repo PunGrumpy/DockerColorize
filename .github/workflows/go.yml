@@ -56,19 +56,9 @@ jobs:
         with:
           name: build
           path: bin/
-      - name: Check If Version Updated
+      - name: Update Version
         if: steps.pleaes-release.outputs.releases_created
         run: |
-          VERSION=${{ steps.pleaes-release.outputs.major }}.${{ steps.pleaes-release.outputs.minor }}.${{ steps.pleaes-release.outputs.patch }}
-      - name: Get SHA256
-        if: steps.pleaes-release.outputs.releases_created
-        id: sha256
-        run: |
-          SHA256=$(shasum -a 256 bin/dockercolorize-darwin-amd64 | awk '{print $1}')
-          echo "SHA256_MAC=$SHA256" >> $GITHUB_ENV
-          SHA256=$(shasum -a 256 bin/dockercolorize-linux-amd64 | awk '{print $1}')
-          echo "SHA256_LINUX=$SHA256" >> $GITHUB_ENV
-      - name: SHA256 from Please Release
-        if: steps.pleaes-release.outputs.releases_created
-        run: |
-          echo "${{ steps.pleaes-release.outputs.sha }}"
+          echo "VERSION=${{ steps.pleaes-release.outputs.major }}.${{ steps.pleaes-release.outputs.minor }}.${{ steps.pleaes-release.outputs.patch }}" >> $GITHUB_ENV
+          echo "${{ env.VERSION }}" > ".version"
+          sed -i "s/Ver = \".*\"/Ver = \"${{ env.VERSION }}\"/g" internal/app/const.go
