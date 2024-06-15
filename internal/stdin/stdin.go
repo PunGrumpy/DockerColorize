@@ -6,28 +6,34 @@ import (
 	"os"
 )
 
+const (
+	bufferCap  = 64 * 1024
+	bufferSize = 1024 * 1024
+)
+
 var ErrNoStdin = errors.New("unable to read from stdin")
 
-func Get() ([]string, error) {
+func Stream(callback func(string)) error {
 	fi, err := os.Stdin.Stat()
 	if err != nil {
-		return nil, err //nolint:wrapcheck
+		return ErrNoStdin
 	}
 
-	if fi.Mode()&os.ModeNamedPipe == 0 && fi.Size() <= 0 {
-		return nil, ErrNoStdin
+	if (fi.Mode()&os.ModeNamedPipe == 0) && fi.Size() <= 0 {
+		return ErrNoStdin
 	}
 
-	var res []string
+	scan := bufio.NewScanner(os.Stdin)
+	buf := make([]byte, 0, bufferCap)
+	scan.Buffer(buf, bufferSize)
 
-	s := bufio.NewScanner(os.Stdin)
-	for s.Scan() {
-		res = append(res, s.Text())
+	for scan.Scan() {
+		callback(scan.Text())
 	}
 
-	if err = s.Err(); err != nil {
-		return nil, err //nolint:wrapcheck
+	if err := scan.Err(); err != nil {
+		return ErrNoStdin
 	}
 
-	return res, nil
+	return nil
 }
