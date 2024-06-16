@@ -1,3 +1,7 @@
+# ⚠️ This repository not maintained anymore but still working fine. If you want to contribute, please fork the repository and make a pull request.
+
+---
+
 <div align="center">
 
 # Dockercolorize 🐳🌈
