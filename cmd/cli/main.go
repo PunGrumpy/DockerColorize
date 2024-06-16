@@ -3,7 +3,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/PunGrumpy/dockercolorize/internal/app"
@@ -23,19 +22,18 @@ func main() {
 }
 
 func run() error {
-	err := stdin.Stream(func(line string) {
-		rows, err := app.Run([]string{line})
-		if err != nil {
-			stdout.Println(err.Error())
-			return
-		}
-
-		for _, row := range rows {
-			stdout.Println(row)
-		}
-	})
+	in, err := stdin.Get()
 	if err != nil {
-		return fmt.Errorf("failed to stream stdin: %w", err)
+		return err //nolint:wrapcheck
+	}
+
+	rows, err := app.Run(in)
+	if err != nil {
+		return err //nolint:wrapcheck
+	}
+
+	for _, row := range rows {
+		stdout.Println(row)
 	}
 
 	return nil
